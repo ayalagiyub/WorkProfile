@@ -38,5 +38,18 @@ def add():
     app.logger.error("Request body is empty")
     return Response(status=404)
 
+@app.route("/health")
+def health():
+    health_messages = []
+    try:
+        app.logger.info("היישום פועל")
+        health_messages.append("היישום: בריא")
+    except Exception as e:
+        app.logger.error(f"בדיקת בריאות היישום נכשלה: {e}")
+        health_messages.append("היישום: לא בריא")
+    combined_health_status = "\\\\n".join(health_messages)
+    return combined_health_status
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
